@@ -33,16 +33,16 @@ fun StartScreen(navHostController: NavHostController) {
         verticalArrangement = Arrangement.Center) {
             Text(text = "What will we use?")
             Button(onClick = {
-                mViewModel.initDatabase(TYPE_ROOM)
-                navHostController.navigate(NavRoute.Main.route) },
+                mViewModel.initDatabase(TYPE_ROOM) { navHostController.navigate(NavRoute.Main.route) }
+                             },
             modifier = Modifier
                 .width(200.dp)
                 .padding(vertical = 8.dp)) {
                 Text(text = "Room Database")
             }
             Button(onClick = {
-                mViewModel.initDatabase(TYPE_FIREBASE)
-                navHostController.navigate(NavRoute.Main.route) },
+                mViewModel.initDatabase(TYPE_FIREBASE) { navHostController.navigate(NavRoute.Main.route) }
+                             },
                 modifier = Modifier
                     .width(200.dp)
                     .padding(vertical = 8.dp)) {

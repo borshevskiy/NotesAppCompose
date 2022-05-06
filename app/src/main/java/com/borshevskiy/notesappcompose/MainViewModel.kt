@@ -3,38 +3,25 @@ package com.borshevskiy.notesappcompose
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.borshevskiy.notesappcompose.model.Note
-import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
+import com.borshevskiy.notesappcompose.database.room.AppRoomDatabase
+import com.borshevskiy.notesappcompose.database.room.RoomRepositoryImpl
+import com.borshevskiy.notesappcompose.utils.REPOSITORY
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
-import java.lang.IllegalArgumentException
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    val readTest: MutableLiveData<List<Note>> by lazy {
-        MutableLiveData<List<Note>>()
-    }
+    val context = application
 
-    val dbType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>(TYPE_ROOM)
-    }
-
-    init {
-        readTest.value = when(dbType.value) {
-            TYPE_ROOM -> listOf(Note(title = "Note 1", description = "Some description"),
-                                Note(title = "Note 2", description = "Some description"),
-                                Note(title = "Note 3", description = "Some description"),
-                                Note(title = "Note 4", description = "Some description"))
-            TYPE_FIREBASE -> listOf()
-            else -> listOf()
-        }
-    }
-
-    fun initDatabase(type: String) {
-        dbType.value = type
+    fun initDatabase(type: String, onSuccess: () -> Unit) {
         Log.d("checkDATA", "MainViewModel initDatabase with type $type")
+        when(type) {
+            TYPE_ROOM -> {
+                REPOSITORY = RoomRepositoryImpl(AppRoomDatabase.getInstance(context).getRoomDao())
+                onSuccess()
+            }
+        }
     }
 
 }
