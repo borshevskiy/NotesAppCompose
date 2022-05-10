@@ -29,21 +29,20 @@ import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
 
 @Composable
-fun MainScreen(navHostController: NavHostController) {
+fun MainScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
 
-    val mViewModel: MainViewModel
-            = viewModel(factory = MainViewModelFactory(LocalContext.current.applicationContext as Application))
+    val notes = mViewModel.readAllNotes().observeAsState(listOf()).value
 
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = { navHostController.navigate(NavRoute.Add.route)}) {
             Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Note", tint = Color.White)
         }
     }) {
-//        LazyColumn {
-//            items(notes) { note ->
-//                NoteItem(navHostController = navHostController, note = note)
-//            }
-//        }
+        LazyColumn {
+            items(notes) { note ->
+                NoteItem(navHostController = navHostController, note = note)
+            }
+        }
     }
 }
 
@@ -65,6 +64,8 @@ fun NoteItem(navHostController: NavHostController,note: Note) {
 @Composable
 fun PrevMainScreen() {
     NotesAppComposeTheme {
-        MainScreen(navHostController = rememberNavController())
+        val mViewModel: MainViewModel
+                = viewModel(factory = MainViewModelFactory(LocalContext.current.applicationContext as Application))
+        MainScreen(navHostController = rememberNavController(), mViewModel = mViewModel)
     }
 }

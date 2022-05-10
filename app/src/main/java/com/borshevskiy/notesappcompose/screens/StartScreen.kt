@@ -22,7 +22,7 @@ import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 
 @Composable
-fun StartScreen(navHostController: NavHostController) {
+fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
 
     val mViewModel: MainViewModel
     = viewModel(factory = MainViewModelFactory(LocalContext.current.applicationContext as Application))
@@ -56,6 +56,8 @@ fun StartScreen(navHostController: NavHostController) {
 @Composable
 fun PrevStartScreen() {
     NotesAppComposeTheme {
-        StartScreen(navHostController = rememberNavController())
+        val mViewModel: MainViewModel
+                = viewModel(factory = MainViewModelFactory(LocalContext.current.applicationContext as Application))
+        StartScreen(navHostController = rememberNavController(), mViewModel = mViewModel)
     }
 }

@@ -1,5 +1,6 @@
 package com.borshevskiy.notesappcompose.screens
 
+import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,16 +11,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.borshevskiy.notesappcompose.MainViewModel
+import com.borshevskiy.notesappcompose.MainViewModelFactory
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
 
 @Composable
-fun NoteScreen(navHostController: NavHostController) {
+fun NoteScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
     Scaffold(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,6 +56,8 @@ fun NoteScreen(navHostController: NavHostController) {
 @Composable
 fun PrevNoteScreen() {
     NotesAppComposeTheme {
-        NoteScreen(navHostController = rememberNavController())
+        val mViewModel: MainViewModel
+                = viewModel(factory = MainViewModelFactory(LocalContext.current.applicationContext as Application))
+        NoteScreen(navHostController = rememberNavController(), mViewModel = mViewModel)
     }
 }

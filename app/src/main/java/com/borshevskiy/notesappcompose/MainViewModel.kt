@@ -5,10 +5,15 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.borshevskiy.notesappcompose.database.room.AppRoomDatabase
 import com.borshevskiy.notesappcompose.database.room.RoomRepositoryImpl
+import com.borshevskiy.notesappcompose.model.Note
+import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.utils.REPOSITORY
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
@@ -23,6 +28,16 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+    fun addNote(note: Note, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            REPOSITORY.create(note) {
+                viewModelScope.launch(Dispatchers.Main) { onSuccess() }
+            }
+        }
+    }
+
+    fun readAllNotes() = REPOSITORY.readAll
 
 }
 

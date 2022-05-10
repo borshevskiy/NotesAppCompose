@@ -1,12 +1,10 @@
 package com.borshevskiy.notesappcompose.database.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.borshevskiy.notesappcompose.model.Note
 
+@Dao
 interface NoteRoomDao {
 
     @Query("SELECT * FROM notes_table")
