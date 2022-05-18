@@ -18,6 +18,9 @@ import com.borshevskiy.notesappcompose.MainViewModel
 import com.borshevskiy.notesappcompose.MainViewModelFactory
 import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.FIREBASE_DATABASE
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.ROOM_DATABASE
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.WHAT_WILL_WE_USE
 import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 
@@ -31,14 +34,14 @@ fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel)
         Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-            Text(text = "What will we use?")
+            Text(text = WHAT_WILL_WE_USE)
             Button(onClick = {
                 mViewModel.initDatabase(TYPE_ROOM) { navHostController.navigate(NavRoute.Main.route) }
                              },
             modifier = Modifier
                 .width(200.dp)
                 .padding(vertical = 8.dp)) {
-                Text(text = "Room Database")
+                Text(text = ROOM_DATABASE)
             }
             Button(onClick = {
                 mViewModel.initDatabase(TYPE_FIREBASE) { navHostController.navigate(NavRoute.Main.route) }
@@ -46,7 +49,7 @@ fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel)
                 modifier = Modifier
                     .width(200.dp)
                     .padding(vertical = 8.dp)) {
-                Text(text = "Firebase Database")
+                Text(text = FIREBASE_DATABASE)
             }
         }
     }

@@ -25,6 +25,10 @@ import com.borshevskiy.notesappcompose.MainViewModelFactory
 import com.borshevskiy.notesappcompose.model.Note
 import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.ADD_NEW_NOTE
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.ADD_NOTE
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.NOTE_DESC
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.NOTE_TITLE
 
 @Composable
 fun AddScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
@@ -37,17 +41,17 @@ fun AddScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
         Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-            Text(text = "Add new note",
+            Text(text = ADD_NEW_NOTE,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
             OutlinedTextField(value = title, onValueChange = { title = it
             isButtonEnabled = title.isNotEmpty() && description.isNotEmpty() }, label = {
-                Text(text = "Note title") }, isError = title.isEmpty())
+                Text(text = NOTE_TITLE) }, isError = title.isEmpty())
             OutlinedTextField(value = description, onValueChange = {description = it
                 isButtonEnabled = title.isNotEmpty() && description.isNotEmpty() }, label = {
-                Text(text = "Note description") }, isError = description.isEmpty())
+                Text(text = NOTE_DESC) }, isError = description.isEmpty())
             Button(modifier = Modifier.padding(16.dp),
                 enabled = isButtonEnabled,
                 onClick = {
@@ -56,7 +60,7 @@ fun AddScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
                     }
                 }
             ) {
-                Text(text = "Add note")
+                Text(text = ADD_NOTE)
             }
         }
     }
