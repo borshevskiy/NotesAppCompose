@@ -6,11 +6,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.borshevskiy.notesappcompose.database.firebase.FirebaseRepositoryImpl
 import com.borshevskiy.notesappcompose.database.room.AppRoomDatabase
 import com.borshevskiy.notesappcompose.database.room.RoomRepositoryImpl
 import com.borshevskiy.notesappcompose.model.Note
 import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.utils.REPOSITORY
+import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +26,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         when(type) {
             TYPE_ROOM -> {
                 REPOSITORY = RoomRepositoryImpl(AppRoomDatabase.getInstance(context).getRoomDao())
+                onSuccess()
+            }
+            TYPE_FIREBASE -> {
+                REPOSITORY = FirebaseRepositoryImpl()
+                REPOSITORY.connectToDatabase({ onSuccess()}, { Log.d("checkData", "Error $it") })
                 onSuccess()
             }
         }
