@@ -27,6 +27,10 @@ import com.borshevskiy.notesappcompose.MainViewModelFactory
 import com.borshevskiy.notesappcompose.model.Note
 import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.EMPTY
+import com.borshevskiy.notesappcompose.utils.DB_TYPE
+import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
+import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 
 @Composable
 fun MainScreen(navHostController: NavHostController, mViewModel: MainViewModel) {
@@ -48,10 +52,15 @@ fun MainScreen(navHostController: NavHostController, mViewModel: MainViewModel) 
 
 @Composable
 fun NoteItem(navHostController: NavHostController,note: Note) {
+    val noteId = when(DB_TYPE) {
+        TYPE_FIREBASE -> note.firebaseId
+        TYPE_ROOM -> note.id
+        else -> EMPTY
+    }
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(vertical = 8.dp, horizontal = 24.dp)
-        .clickable { navHostController.navigate(NavRoute.Note.route + "/${note.id}") },
+        .clickable { navHostController.navigate(NavRoute.Note.route + "/$noteId") },
         elevation = 6.dp) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(text = note.title, fontSize = 24.sp, fontWeight = FontWeight.Bold)

@@ -29,6 +29,9 @@ import com.borshevskiy.notesappcompose.utils.Constants.Keys.EMPTY
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.NONE
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.TITLE
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.UPDATE
+import com.borshevskiy.notesappcompose.utils.DB_TYPE
+import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
+import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -36,7 +39,11 @@ import kotlinx.coroutines.launch
 fun NoteScreen(navHostController: NavHostController, mViewModel: MainViewModel, noteId: String?) {
 
     val notes = mViewModel.readAllNotes().observeAsState(listOf()).value
-    val note = notes.firstOrNull { it.id == noteId?.toInt() } ?: Note(title = NONE, description = NONE)
+    val note = when(DB_TYPE) {
+        TYPE_ROOM -> notes.firstOrNull { it.id == noteId?.toInt() } ?: Note()
+        TYPE_FIREBASE -> notes.firstOrNull { it.firebaseId == noteId } ?: Note()
+        else -> Note()
+    }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(EMPTY) }
@@ -74,7 +81,7 @@ fun NoteScreen(navHostController: NavHostController, mViewModel: MainViewModel, 
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
-                            mViewModel.updateNote(Note(note.id, title, desc)) {
+                            mViewModel.updateNote(Note(id = note.id, title = title, description = desc, firebaseId = note.firebaseId)) {
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                         }
