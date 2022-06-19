@@ -73,7 +73,7 @@ fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel)
                             LOGIN = login
                             PASSWORD = password
                             mViewModel.initDatabase(TYPE_FIREBASE) {
-                                DB_TYPE = TYPE_FIREBASE
+                                DB_TYPE.value = TYPE_FIREBASE
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                         }, enabled = login.isNotEmpty() && password.isNotEmpty()
@@ -91,7 +91,7 @@ fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel)
                 Text(text = WHAT_WILL_WE_USE)
                 Button(onClick = {
                     mViewModel.initDatabase(TYPE_ROOM) {
-                        DB_TYPE = TYPE_ROOM
+                        DB_TYPE.value = TYPE_ROOM
                         navHostController.navigate(NavRoute.Main.route) }
                 },
                     modifier = Modifier

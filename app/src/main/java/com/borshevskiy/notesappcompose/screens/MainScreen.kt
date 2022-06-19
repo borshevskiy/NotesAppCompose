@@ -52,7 +52,7 @@ fun MainScreen(navHostController: NavHostController, mViewModel: MainViewModel) 
 
 @Composable
 fun NoteItem(navHostController: NavHostController,note: Note) {
-    val noteId = when(DB_TYPE) {
+    val noteId = when(DB_TYPE.value) {
         TYPE_FIREBASE -> note.firebaseId
         TYPE_ROOM -> note.id
         else -> EMPTY

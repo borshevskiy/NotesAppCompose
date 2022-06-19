@@ -10,6 +10,8 @@ import com.borshevskiy.notesappcompose.database.firebase.FirebaseRepositoryImpl
 import com.borshevskiy.notesappcompose.database.room.AppRoomDatabase
 import com.borshevskiy.notesappcompose.database.room.RoomRepositoryImpl
 import com.borshevskiy.notesappcompose.model.Note
+import com.borshevskiy.notesappcompose.utils.Constants.Keys.EMPTY
+import com.borshevskiy.notesappcompose.utils.DB_TYPE
 import com.borshevskiy.notesappcompose.utils.REPOSITORY
 import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
@@ -59,6 +61,18 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun readAllNotes() = REPOSITORY.readAll
+
+    fun signOut(onSuccess: () -> Unit) {
+        when(DB_TYPE.value) {
+            TYPE_FIREBASE,
+            TYPE_ROOM -> {
+                REPOSITORY.signOut()
+                DB_TYPE.value = EMPTY
+                onSuccess()
+            }
+            else -> { }
+        }
+    }
 
 }
 
