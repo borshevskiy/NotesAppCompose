@@ -19,7 +19,7 @@ import com.borshevskiy.notesappcompose.MainViewModel
 import com.borshevskiy.notesappcompose.MainViewModelFactory
 import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.ui.theme.NotesAppComposeTheme
-import com.borshevskiy.notesappcompose.utils.Constants
+import com.borshevskiy.notesappcompose.utils.*
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.FIREBASE_DATABASE
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.LOGIN_TEXT
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.LOG_IN
@@ -27,8 +27,6 @@ import com.borshevskiy.notesappcompose.utils.Constants.Keys.PASSWORD_TEXT
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.ROOM_DATABASE
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.SIGN_IN
 import com.borshevskiy.notesappcompose.utils.Constants.Keys.WHAT_WILL_WE_USE
-import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
-import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -72,10 +70,12 @@ fun StartScreen(navHostController: NavHostController, mViewModel: MainViewModel)
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
+                            LOGIN = login
+                            PASSWORD = password
                             mViewModel.initDatabase(TYPE_FIREBASE) {
 
                             }
-                        }
+                        }, enabled = login.isNotEmpty() && password.isNotEmpty()
                     ) {
                         Text(text = SIGN_IN)
                     }

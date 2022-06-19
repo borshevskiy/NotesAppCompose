@@ -10,7 +10,6 @@ import com.borshevskiy.notesappcompose.database.firebase.FirebaseRepositoryImpl
 import com.borshevskiy.notesappcompose.database.room.AppRoomDatabase
 import com.borshevskiy.notesappcompose.database.room.RoomRepositoryImpl
 import com.borshevskiy.notesappcompose.model.Note
-import com.borshevskiy.notesappcompose.navigation.NavRoute
 import com.borshevskiy.notesappcompose.utils.REPOSITORY
 import com.borshevskiy.notesappcompose.utils.TYPE_FIREBASE
 import com.borshevskiy.notesappcompose.utils.TYPE_ROOM
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    val context = application
+    private val context = application
 
     fun initDatabase(type: String, onSuccess: () -> Unit) {
         Log.d("checkDATA", "MainViewModel initDatabase with type $type")
@@ -31,7 +30,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             TYPE_FIREBASE -> {
                 REPOSITORY = FirebaseRepositoryImpl()
                 REPOSITORY.connectToDatabase({ onSuccess()}, { Log.d("checkData", "Error $it") })
-                onSuccess()
             }
         }
     }
