@@ -5,6 +5,7 @@ import com.borshevskiy.notesappcompose.database.DatabaseRepository
 const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
+const val FIREBASE_ID = "firebaseId"
 
 lateinit var REPOSITORY: DatabaseRepository
 lateinit var LOGIN: String
@@ -18,8 +19,8 @@ object Constants {
         const val NOTE_TITLE = "Note title"
         const val NOTE_DESC = "Note description"
         const val ADD_NOTE = "Add note"
-        const val TITLE = "Title"
-        const val DESC = "Description"
+        const val TITLE = "title"
+        const val DESC = "description"
         const val WHAT_WILL_WE_USE = "What will we use?"
         const val ROOM_DATABASE = "Room Database"
         const val FIREBASE_DATABASE = "Firebase Database"
